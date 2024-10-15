@@ -16,6 +16,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "baseUrl": ".",  // Add this
+    "paths": {       // Add this
+      "@/*": ["./*"] // Maps the "@" alias to the project root
+    },
     "plugins": [
       {
         "name": "next"
