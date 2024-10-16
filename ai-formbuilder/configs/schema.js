@@ -1,6 +1,6 @@
 import { pgTable, PgTable, serial, text, varchar } from "drizzle-orm/pg-core";
 
-export const Jsonforms = pgTable('jsonforms', {
+export const JsonForms = pgTable('jsonForms', {
     id:serial('id').primaryKey(),
     jsonform:text('jsonform').notNull(),
     createdBy:varchar('createdBy').notNull(),
