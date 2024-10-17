@@ -1,40 +1,40 @@
-"use client";
-import { SignInButton, UserButton, useUser } from '@clerk/nextjs';
-import React from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+"use client"
+import { Button } from '@/components/ui/button'
+import { SignInButton, UserButton, useUser } from '@clerk/nextjs'
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import React, { useEffect } from 'react'
 
 function Header() {
-    const { user, isSignedIn } = useUser();
-    return (
-        <div className='p-5 border-b shadow-sm'>
-            <div className='flex items-center justify-between'>
-                <div className='text-left'>
-                   
-                    <h1 className='font-bold'>AI FORM BUILDER</h1>
-                </div>
-                {isSignedIn ? (
-                    <div className='flex items-center gap-5'>
-                        <Link href={'/dashboard'}>
-                            <Button variant="outline">Dashboard</Button>
-                        </Link>
-                        <UserButton />
-                        <div className='text-right'>
-                            <Link href={'/get-started'}>
-                                <Button>Get Started</Button>
-                            </Link>
-                        </div>
-                    </div>
-                ) : (
-                    <div className='text-right'>
-                        <SignInButton>
-                            <Button>Sign In</Button>
-                        </SignInButton>
-                    </div>
-                )}
-            </div>
+  const {user,isSignedIn}=useUser();
+  const path=usePathname();
+  useEffect(()=>{
+    console.log(path)
+  },[])
+  return !path.includes('aiform')&&(
+    <div className='p-3 px-5 border-b shadow-sm'>
+        <div className='flex items-center justify-between'>
+            <Image src={'/logo.svg'} 
+            width={180} height={50} alt='logo'/>
+            {isSignedIn?
+            <div className='flex items-center gap-5'>
+              <Link href={'/dashboard'}>
+              <Button variant="outline">Dashboard</Button>  
+              </Link>
+            <UserButton/>
+            </div>:
+            <SignInButton>
+              <Button>Get Started</Button>
+            </SignInButton>
+           
+          }
+            
         </div>
-    );
+
+        
+    </div>
+  )
 }
 
-export default Header;
+export default Header

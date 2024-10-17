@@ -1,82 +1,89 @@
-import { LibraryBig, LineChart, MessageSquare, Shield } from 'lucide-react';
-import { usePathname } from 'next/navigation';
-import React, { useEffect } from 'react';
-import * as Progress from '@radix-ui/react-progress';
 import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { db } from '@/configs';
+import { JsonForms } from '@/configs/schema';
+import { useUser } from '@clerk/nextjs';
+import { desc, eq } from 'drizzle-orm';
+import { LibraryBig, LineChart, MessageSquare, Shield } from 'lucide-react'
+import Link from 'next/link';
+import { usePathname } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 
 function SideNav() {
-    const menuList = [
+    const menuList=[
         {
-            id: 1,
-            name: 'My Forms',
-            icon: LibraryBig,
-            path: '/dashboard',
+            id:1,
+            name:'My Forms',
+            icon:LibraryBig,
+            path:'/dashboard'
         },
         {
-            id: 2,
-            name: 'Responses',
-            icon: MessageSquare,
-            path: '/dashboard/responses',
+            id:1,
+            name:'Responses',
+            icon:MessageSquare,
+            path:'/dashboard/responses'
         },
+        // {
+        //     id:1,
+        //     name:'Analytics',
+        //     icon:LineChart,
+        //     path:'/dashboard/analytics'
+        // },
         {
-            id: 3,
-            name: 'Analytics',
-            icon: LineChart,
-            path: '/dashboard/analytics',
-        },
-        {
-            id: 4,
-            name: 'Upgrade',
-            icon: Shield,
-            path: '/dashboard/upgrade',
-        },
-    ];
+            id:1,
+            name:'Upgrade',
+            icon:Shield,
+            path:'/dashboard/upgrade'
+        }
+    ]
 
-    const path = usePathname();
+    const {user}=useUser();
+    const path=usePathname();
+    const [formList,setFormList]=useState();
+    const [PercFileCreated,setPercFileCreated]=useState(0);
 
-    useEffect(() => {
-        // console.log(path);
-    }, [path]);
+    useEffect(()=>{
+      
+        user&&GetFormList()
+    },[user])
 
-    return (
-        <div className='h-screen shadow-md border'>
-            <div className='p-4'>
-                {menuList.map((menu, index) => (
-                    <h2
-                        key={index}
-                        className={`flex items-center gap-2 p-3 mb-2 text-sm
-                        hover:bg-primary hover:text-white rounded-lg cursor-pointer 
-                        ${path === menu.path && 'bg-primary text-white'}`}
-                    >
-                        <menu.icon className='w-5 h-5' />
-                        {menu.name}
-                    </h2>
-                ))}
-            </div>
-            <div className='fixed bottom-5 p-4 w-48'>
-                <Button className='w-full text-sm py-2'>Create Form</Button>
-                <div className='my-4'>
-                    {/* Ensure progress bar visibility with styles */}
-                    <Progress.Root 
-                      className='relative h-2 bg-gray-300 rounded-full overflow-hidden'
-                      value={33}
-                      style={{ width: '100%' }}
-                    >
-                        <Progress.Indicator
-                            className='bg-blue-500 h-full transition-all duration-500 ease-in-out'
-                            style={{ width: '33%' }} // Dynamic based on the value
-                        />
-                    </Progress.Root>
-                    <h2 className='text-xs mt-2 text-gray-600'>
-                        <strong>2</strong> out of <strong>3</strong> Forms Created
-                    </h2>
-                    <h2 className='text-xs mt-1 text-gray-600'>
-                        Upgrade for Unlimited Form Creation
-                    </h2>
-                </div>
+    const GetFormList=async()=>{
+        const result=await db.select().from(JsonForms)
+        .where(eq(JsonForms.createdBy,user?.primaryEmailAddress?.emailAddress))
+        .orderBy(desc(JsonForms.id));
+
+        setFormList(result);
+        
+        const perc=(result.length/3)*100;
+        setPercFileCreated(perc)
+    }
+
+  return (
+    <div className='h-screen shadow-md border'>
+        <div className='p-5'>
+            {menuList.map((menu,index)=>(
+                <Link href={menu.path}  key={index} 
+                className={`flex items-center gap-3 p-4 mb-3 
+                hover:bg-primary hover:text-white rounded-lg
+                cursor-pointer text-gray-500
+                ${path==menu.path&&'bg-primary text-white'}
+                `}>
+                    <menu.icon/>
+                    {menu.name}
+                </Link>
+            ))}
+        </div>
+        <div className='fixed bottom-7 p-6 w-64 '>
+            <Button className="w-full">+ Create Form</Button>
+            <div className='my-7'>
+            <Progress value={PercFileCreated} />
+            <h2 className='text-sm mt-2 text-gray-600'><strong>{formList?.length} </strong>Out of <strong>3</strong> File Created</h2>
+            <h2 className='text-sm mt-3 text-gray-600'>Upgrade your plan for unlimted AI form build</h2>
+            
             </div>
         </div>
-    );
+    </div>
+  )
 }
 
-export default SideNav;
+export default SideNav
