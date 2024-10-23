@@ -19,17 +19,17 @@ function Hero() {
       <div className="mt-8 flex flex-wrap justify-center gap-4">
         <a
           className="block w-full rounded bg-primary px-12 py-3 text-sm font-medium text-white shadow hover:bg-purple-600 focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
-          href="#"
+          href="/dashboard"
         >
           + Create AI Form
         </a>
 
-        <a
+        {/* <a
           className="block w-full rounded px-12 py-3 text-sm font-medium text-primary shadow hover:text-purple-600 focus:outline-none focus:ring active:text-red-500 sm:w-auto"
           href="#"
         >
           Learn More
-        </a>
+        </a> */}
       </div>
     </div>
   </div>
@@ -37,10 +37,10 @@ function Hero() {
 <section className="">
   <div className="mx-auto max-w-screen-xl px-4 py-56 ">
     <div className="mx-auto max-w-lg text-center">
-      <h2 className="text-3xl font-bold sm:text-4xl">How it Works</h2>
+      <h2 className="text-3xl font-bold sm:text-4xl mt-4 text-gray-300">AI powered Form Generator.</h2>
 
       <p className="mt-4 text-gray-300">
-        AI powered Form Generator.
+      How it Works.
       </p>
     </div>
 
@@ -51,7 +51,7 @@ function Hero() {
       >
        <AtomIcon className='h-8 w-8'/>
 
-        <h2 className="mt-4 text-xl font-bold text-black">Write promot for your form</h2>
+        <h2 className="mt-4 text-xl font-bold text-gray-300">Write promot for your form</h2>
 
         <p className="mt-1 text-sm text-gray-600">
           
@@ -64,7 +64,7 @@ function Hero() {
       >
       <Edit className='h-8 w-8'/>
 
-        <h2 className="mt-4 text-xl font-bold text-black">Edit Your form </h2>
+        <h2 className="mt-4 text-xl font-bold text-gray-300">Edit Your form </h2>
 
         <p className="mt-1 text-sm text-gray-600">
          
@@ -77,7 +77,7 @@ function Hero() {
       >
       <Share2 className='h-8 w-8' />
 
-        <h2 className="mt-4 text-xl font-bold text-black">Share & Start Accepting Responses</h2>
+        <h2 className="mt-4 text-xl font-bold text-gray-300">Share & Start Accepting Responses</h2>
 
         <p className="mt-1 text-sm text-gray-600">
           

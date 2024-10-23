@@ -77,8 +77,8 @@ function SideNav() {
             <Button className="w-full">+ Create Form</Button>
             <div className='my-7'>
             <Progress value={PercFileCreated} />
-            <h2 className='text-sm mt-2 text-gray-600'><strong>{formList?.length} </strong>Out of <strong>3</strong> File Created</h2>
-            <h2 className='text-sm mt-3 text-gray-600'>Upgrade your plan for unlimted AI form build</h2>
+            <h2 className='text-sm mt-2 text-white'><strong>{formList?.length} </strong>Out of <strong>3</strong> File Created</h2>
+            <h2 className='text-sm mt-3 text-white'>Upgrade your plan for unlimted AI form build</h2>
             
             </div>
         </div>
